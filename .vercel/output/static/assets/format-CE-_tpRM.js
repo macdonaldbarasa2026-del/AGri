@@ -1,1 +1,0 @@
-var e=new Intl.NumberFormat(`en-KE`,{style:`currency`,currency:`KES`,maximumFractionDigits:0});function t(t){return e.format(t)}export{t};
