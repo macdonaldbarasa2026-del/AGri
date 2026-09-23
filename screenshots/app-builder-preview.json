@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Kenya Shamb",
+      "hasCanvas": false,
+      "bodyTextLen": 3723,
+      "bodyTextHash": "542ac4c4eb5a2ee7999b0d0b80e109028cf69dc071af01d01351da1a49570d8e",
+      "bodyTextPrefix": "Karibu · M-Pesa · Dispatch to 47 counties hello@kenyashamb.co.ke",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Kenya Shamb",
+      "hasCanvas": false,
+      "bodyTextLen": 3578,
+      "bodyTextHash": "016ba2ae094b18fdaa0c1593c988789d25fc9e0c408a4846800f7b4e8063ad0a",
+      "bodyTextPrefix": "Karibu · M-Pesa · Dispatch to 47 counties Kenya Shamb FARM MARKE",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

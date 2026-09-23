@@ -1,0 +1,1032 @@
+export const COUNTIES = [
+  "Baringo",
+  "Bomet",
+  "Bungoma",
+  "Busia",
+  "Elgeyo-Marakwet",
+  "Embu",
+  "Garissa",
+  "Homa Bay",
+  "Isiolo",
+  "Kajiado",
+  "Kakamega",
+  "Kericho",
+  "Kiambu",
+  "Kilifi",
+  "Kirinyaga",
+  "Kisii",
+  "Kisumu",
+  "Kitui",
+  "Kwale",
+  "Laikipia",
+  "Lamu",
+  "Machakos",
+  "Makueni",
+  "Mandera",
+  "Marsabit",
+  "Meru",
+  "Migori",
+  "Mombasa",
+  "Murang'a",
+  "Nairobi",
+  "Nakuru",
+  "Nandi",
+  "Narok",
+  "Nyamira",
+  "Nyandarua",
+  "Nyeri",
+  "Samburu",
+  "Siaya",
+  "Taita-Taveta",
+  "Tana River",
+  "Tharaka-Nithi",
+  "Trans Nzoia",
+  "Turkana",
+  "Uasin Gishu",
+  "Vihiga",
+  "Wajir",
+  "West Pokot",
+] as const;
+
+export type County = (typeof COUNTIES)[number];
+
+export type CategoryId =
+  | "seeds"
+  | "fertilizer"
+  | "protection"
+  | "produce"
+  | "machinery"
+  | "livestock"
+  | "irrigation"
+  | "tools";
+
+export type Category = {
+  id: CategoryId;
+  name: string;
+  kicker: string;
+  description: string;
+  image: string;
+  countLabel: string;
+};
+
+export type Seller = {
+  id: string;
+  name: string;
+  owner: string;
+  county: County;
+  town: string;
+  verified: boolean;
+  rating: number;
+  reviews: number;
+  years: number;
+  bio: string;
+  phone: string;
+  email: string;
+  cover: string;
+  initials: string;
+  speciality: string;
+};
+
+export type Product = {
+  id: string;
+  name: string;
+  category: CategoryId;
+  sellerId: string;
+  price: number;
+  compareAt?: number;
+  unit: string;
+  image: string;
+  gallery?: string[];
+  rating: number;
+  reviews: number;
+  stock: number;
+  featured?: boolean;
+  kebs?: boolean;
+  kephis?: boolean;
+  pcpb?: boolean;
+  origin: string;
+  leadDays: number;
+  summary: string;
+  description: string;
+  specs: { label: string; value: string }[];
+};
+
+export const CATEGORIES: Category[] = [
+  {
+    id: "seeds",
+    name: "Seeds & planting",
+    kicker: "Certified",
+    description: "KEPHIS-certified maize, pulses, vegetables and potato seed.",
+    image: "/images/cat-seeds.jpg",
+    countLabel: "Planting stock",
+  },
+  {
+    id: "fertilizer",
+    name: "Fertilizers & soil",
+    kicker: "Plant nutrition",
+    description: "DAP, CAN, NPK and compost — depot prices, 47-county delivery.",
+    image: "/images/cat-fertilizer.jpg",
+    countLabel: "Soil nutrition",
+  },
+  {
+    id: "protection",
+    name: "Crop protection",
+    kicker: "PCPB listed",
+    description: "Fungicides, herbicides and field medicines from licensed sellers.",
+    image: "/images/cat-protection.jpg",
+    countLabel: "Field medicines",
+  },
+  {
+    id: "produce",
+    name: "Fresh harvest",
+    kicker: "Farm-gate",
+    description: "Avocado, mango, tea, coffee, potato and milk, packed to grade.",
+    image: "/images/cat-produce.jpg",
+    countLabel: "Harvest lots",
+  },
+  {
+    id: "machinery",
+    name: "Machinery",
+    kicker: "Yard inspected",
+    description: "Tractors, ploughs and sprayers from highland yards.",
+    image: "/images/cat-machinery.jpg",
+    countLabel: "Equipment",
+  },
+  {
+    id: "livestock",
+    name: "Livestock & vet",
+    kicker: "Dairy & poultry",
+    description: "Feeds, vaccines, incubators and acaricides for the herd.",
+    image: "/images/cat-livestock.jpg",
+    countLabel: "Herd & flock",
+  },
+  {
+    id: "irrigation",
+    name: "Water & greenhouse",
+    kicker: "Year-round",
+    description: "Drip kits, solar pumps and tunnel houses for intensive plots.",
+    image: "/images/cat-irrigation.jpg",
+    countLabel: "Water systems",
+  },
+  {
+    id: "tools",
+    name: "Farm tools",
+    kicker: "Daily kit",
+    description: "Jembes, pangas, sprayers and barrows built for Kenyan soil.",
+    image: "/images/cat-tools.jpg",
+    countLabel: "Hand tools",
+  },
+];
+
+export const SELLERS: Seller[] = [
+  {
+    id: "kiambu-greens",
+    name: "Kiambu Greens Co-op",
+    owner: "Amina Wanjiku",
+    county: "Kiambu",
+    town: "Limuru",
+    verified: true,
+    rating: 4.9,
+    reviews: 312,
+    years: 11,
+    bio: "A 240-member greenhouse co-operative supplying seedlings and salad crops into Nairobi within a day. Packhouse KEBS-inspected.",
+    phone: "+254 712 448 210",
+    email: "amina@kiambugreens.co.ke",
+    cover: "/images/hero-greenhouse.jpg",
+    initials: "KG",
+    speciality: "Greenhouse seedlings",
+  },
+  {
+    id: "eldoret-yard",
+    name: "Highlands Tractor Yard",
+    owner: "David Kiptoo",
+    county: "Uasin Gishu",
+    town: "Eldoret",
+    verified: true,
+    rating: 4.8,
+    reviews: 186,
+    years: 15,
+    bio: "Yard-inspected compact tractors and implements for the North Rift. Every machine is serviced, documented and delivered on a low-bed.",
+    phone: "+254 722 901 445",
+    email: "david@highlandsyard.co.ke",
+    cover: "/images/hero-tractor.jpg",
+    initials: "HY",
+    speciality: "Tractors & implements",
+  },
+  {
+    id: "coast-fresh",
+    name: "Coast Fresh Exports",
+    owner: "Fatma Hassan",
+    county: "Mombasa",
+    town: "Changamwe",
+    verified: true,
+    rating: 4.7,
+    reviews: 254,
+    years: 9,
+    bio: "Cold-chain packer moving graded Hass and Kent from the coast and upper eastern into hotels, grocers and the port.",
+    phone: "+254 733 220 118",
+    email: "fatma@coastfresh.co.ke",
+    cover: "/images/cat-produce.jpg",
+    initials: "CF",
+    speciality: "Export produce",
+  },
+  {
+    id: "nyanza-water",
+    name: "Nyanza Irrigation Works",
+    owner: "Peter Otieno",
+    county: "Kisumu",
+    town: "Kisumu",
+    verified: true,
+    rating: 4.8,
+    reviews: 141,
+    years: 8,
+    bio: "Designs and installs acre-scale drip, solar pumping and tunnel houses across the lake basin and western Kenya.",
+    phone: "+254 701 556 773",
+    email: "peter@nyanzawater.co.ke",
+    cover: "/images/hero-greenhouse.jpg",
+    initials: "NW",
+    speciality: "Irrigation systems",
+  },
+  {
+    id: "kitale-seed",
+    name: "Trans Nzoia Seed House",
+    owner: "Grace Chebet",
+    county: "Trans Nzoia",
+    town: "Kitale",
+    verified: true,
+    rating: 4.9,
+    reviews: 408,
+    years: 14,
+    bio: "KEPHIS-registered merchant of highland maize, bean and potato seed, with fertilizer lots from Eldoret depots.",
+    phone: "+254 720 334 890",
+    email: "grace@kitaleseed.co.ke",
+    cover: "/images/cat-seeds.jpg",
+    initials: "TS",
+    speciality: "Certified seed",
+  },
+  {
+    id: "machakos-vet",
+    name: "Machakos Vet & Crop Care",
+    owner: "Joseph Mutua",
+    county: "Machakos",
+    town: "Machakos",
+    verified: true,
+    rating: 4.6,
+    reviews: 198,
+    years: 12,
+    bio: "Licensed agrovet covering lower eastern — PCPB crop medicines, acaricides and poultry vaccines with cold-chain last mile.",
+    phone: "+254 715 667 204",
+    email: "joseph@machakosvet.co.ke",
+    cover: "/images/cat-protection.jpg",
+    initials: "MV",
+    speciality: "Agrovet medicines",
+  },
+  {
+    id: "kericho-leaf",
+    name: "Kericho Leaf Desk",
+    owner: "Mary Cherono",
+    county: "Kericho",
+    town: "Kericho",
+    verified: true,
+    rating: 4.8,
+    reviews: 167,
+    years: 20,
+    bio: "Smallholder tea desk aggregating green leaf and packed orthodox lots from the western highlands.",
+    phone: "+254 728 441 032",
+    email: "mary@kericholeaf.co.ke",
+    cover: "/images/hero-highlands.jpg",
+    initials: "KL",
+    speciality: "Tea lots",
+  },
+  {
+    id: "meru-hass",
+    name: "Meru Avocado Growers",
+    owner: "Samuel Mwenda",
+    county: "Meru",
+    town: "Maua",
+    verified: true,
+    rating: 4.9,
+    reviews: 221,
+    years: 7,
+    bio: "Grower-owned Hass and coffee parchment desk. Fruit is picked to oil content, packed in the highlands and moved same week.",
+    phone: "+254 708 912 560",
+    email: "samuel@meruhass.co.ke",
+    cover: "/images/cat-produce.jpg",
+    initials: "MA",
+    speciality: "Hass & coffee",
+  },
+];
+
+export const PRODUCTS: Product[] = [
+  {
+    id: "h614-maize-2kg",
+    name: "ShambaGold H614 maize seed",
+    category: "seeds",
+    sellerId: "kitale-seed",
+    price: 850,
+    compareAt: 1500,
+    unit: "2 kg pack",
+    image: "/images/cat-seeds.jpg",
+    gallery: ["/images/cat-seeds.jpg", "/images/hero-harvest.jpg"],
+    rating: 4.9,
+    reviews: 640,
+    stock: 420,
+    featured: true,
+    kephis: true,
+    origin: "Kitale",
+    leadDays: 2,
+    summary: "Highland workhorse maize. One pack plants about an acre.",
+    description:
+      "H614 remains the altitude standard above 1,800 metres — 160 to 180 days, tight husk cover and reliable cob fill on Trans Nzoia and Uasin Gishu soils. This KEPHIS-certified 2 kg pack is treated and lot-traced. Sow at 75 × 25 cm; a pack covers roughly one acre. Commercial pack — NCPB subsidy lots are listed separately when available.",
+    specs: [
+      { label: "Variety", value: "H614 (highland)" },
+      { label: "Maturity", value: "160–180 days" },
+      { label: "Coverage", value: "~1 acre / 2 kg" },
+      { label: "Certification", value: "KEPHIS" },
+    ],
+  },
+  {
+    id: "nyayo-beans-2kg",
+    name: "Nyayo rose coco beans",
+    category: "seeds",
+    sellerId: "kitale-seed",
+    price: 720,
+    unit: "2 kg pack",
+    image: "/images/hero-harvest.jpg",
+    rating: 4.7,
+    reviews: 214,
+    stock: 310,
+    kephis: true,
+    origin: "Kitale",
+    leadDays: 2,
+    summary: "The breakfast bean. Clean, graded planting stock.",
+    description:
+      "Rose coco Nyayo is the Kenyan household bean — cream with red speckle, cooks evenly, holds its skin. This lot is hand-graded planting stock, not food-grade sweepings. Suitable for intercrop with maize in the highlands and mid-altitude zones.",
+    specs: [
+      { label: "Type", value: "Rose coco / Nyayo" },
+      { label: "Use", value: "Planting or food" },
+      { label: "Germination", value: "≥ 90%" },
+    ],
+  },
+  {
+    id: "tomato-tray-50",
+    name: "Hybrid tomato seedling tray",
+    category: "seeds",
+    sellerId: "kiambu-greens",
+    price: 480,
+    unit: "50-cell tray",
+    image: "/images/hero-greenhouse.jpg",
+    gallery: ["/images/hero-greenhouse.jpg", "/images/cat-protection.jpg"],
+    rating: 4.8,
+    reviews: 390,
+    stock: 180,
+    featured: true,
+    origin: "Limuru",
+    leadDays: 1,
+    summary: "Hardened Anna F1-type seedlings, ready for the tunnel.",
+    description:
+      "Raised in Limuru highland tunnels, hardened for a week before dispatch. Determinate salad type suited to greenhouse and open field around Nairobi, Nakuru and Meru. Transplant into moist soil; first harvest from week eight under drip.",
+    specs: [
+      { label: "Cells", value: "50" },
+      { label: "Habit", value: "Determinate hybrid" },
+      { label: "Dispatch", value: "Nairobi next day" },
+    ],
+  },
+  {
+    id: "potato-seed-50kg",
+    name: "Certified Irish potato seed",
+    category: "seeds",
+    sellerId: "kitale-seed",
+    price: 4200,
+    unit: "50 kg bag",
+    image: "/images/hero-harvest.jpg",
+    rating: 4.6,
+    reviews: 128,
+    stock: 64,
+    kephis: true,
+    origin: "Nyandarua",
+    leadDays: 3,
+    summary: "Shangi-type seed potato, sprouted and size-graded.",
+    description:
+      "Size-graded Shangi-type seed from Nyandarua multipliers. Sprouted eyes, no soft rot in the inspected lot. One 50 kg bag plants a third to half an acre depending on spacing. Keep bags in shade until the lorry arrives.",
+    specs: [
+      { label: "Variety", value: "Shangi type" },
+      { label: "Grade", value: "Seed, 35–55 mm" },
+      { label: "Source", value: "Nyandarua multipliers" },
+    ],
+  },
+  {
+    id: "terraken-dap-50",
+    name: "TerraKen DAP 18:46:0",
+    category: "fertilizer",
+    sellerId: "kitale-seed",
+    price: 4150,
+    compareAt: 5250,
+    unit: "50 kg bag",
+    image: "/images/cat-fertilizer.jpg",
+    rating: 4.8,
+    reviews: 890,
+    stock: 760,
+    featured: true,
+    kebs: true,
+    origin: "Eldoret",
+    leadDays: 2,
+    summary: "Planting phosphorus. Commercial depot price, not the subsidy desk.",
+    description:
+      "Diammonium phosphate 18:46:0 for maize, wheat and potato at planting. Apply 50 kg per acre banded with the seed, not in the hole. This is the commercial highland depot price (board average around KES 4,100–4,400). NCPB subsidy bags, when in season, list nearer KES 2,000 at designated desks.",
+    specs: [
+      { label: "Analysis", value: "18-46-0" },
+      { label: "Rate", value: "50 kg / acre at planting" },
+      { label: "Desk", value: "Commercial (not NCPB)" },
+    ],
+  },
+  {
+    id: "terraken-can-50",
+    name: "TerraKen CAN 27N",
+    category: "fertilizer",
+    sellerId: "kitale-seed",
+    price: 3100,
+    unit: "50 kg bag",
+    image: "/images/cat-fertilizer.jpg",
+    rating: 4.7,
+    reviews: 512,
+    stock: 540,
+    kebs: true,
+    origin: "Eldoret",
+    leadDays: 2,
+    summary: "Top-dress nitrogen with calcium for maize at tasselling.",
+    description:
+      "Calcium ammonium nitrate, 27% N. The highland top-dress: 50 kg per acre at 45–60 days, when maize is knee-high to tasselling. Calcium helps on acidic Rift soils. Store dry; CAN cakes if the store leaks.",
+    specs: [
+      { label: "Nitrogen", value: "27%" },
+      { label: "Timing", value: "Day 45–60" },
+      { label: "Rate", value: "50 kg / acre" },
+    ],
+  },
+  {
+    id: "terraken-npk-50",
+    name: "TerraKen NPK 23:23:0",
+    category: "fertilizer",
+    sellerId: "kitale-seed",
+    price: 3450,
+    unit: "50 kg bag",
+    image: "/images/cat-fertilizer.jpg",
+    rating: 4.6,
+    reviews: 301,
+    stock: 410,
+    kebs: true,
+    origin: "Nakuru",
+    leadDays: 2,
+    summary: "Early vegetative feed when the stand needs a second push.",
+    description:
+      "Balanced nitrogen-phosphorus for the second dressing on maize and wheat, typically day 21–28. Works on the same acre plan as DAP at planting and CAN at tasselling. Nakuru depot dispatch.",
+    specs: [
+      { label: "Analysis", value: "23-23-0" },
+      { label: "Window", value: "Day 21–28" },
+      { label: "Crop", value: "Maize, wheat, barley" },
+    ],
+  },
+  {
+    id: "compost-tonne",
+    name: "Cured compost blend",
+    category: "fertilizer",
+    sellerId: "kiambu-greens",
+    price: 2200,
+    unit: "1 tonne",
+    image: "/images/hero-harvest.jpg",
+    rating: 4.5,
+    reviews: 88,
+    stock: 40,
+    origin: "Kiambu",
+    leadDays: 4,
+    summary: "Well-cured farmyard compost for tunnels and kitchen gardens.",
+    description:
+      "Six-month cured manure and green waste from the Kiambu co-op. Dark, earthy, no raw ammonia. A tonne covers a greenhouse bay or a quarter-acre kitchen plot when mixed into the top 15 cm.",
+    specs: [
+      { label: "Maturity", value: "Cured ≥ 6 months" },
+      { label: "Delivery", value: "Tipper, Kiambu–Nairobi" },
+    ],
+  },
+  {
+    id: "leafguard-copper",
+    name: "LeafGuard copper fungicide",
+    category: "protection",
+    sellerId: "machakos-vet",
+    price: 890,
+    unit: "500 g",
+    image: "/images/cat-protection.jpg",
+    rating: 4.6,
+    reviews: 276,
+    stock: 230,
+    pcpb: true,
+    featured: true,
+    origin: "Machakos",
+    leadDays: 2,
+    summary: "Protectant copper for tomato, potato and coffee rust pressure.",
+    description:
+      "Wettable copper hydroxide for early blight, late blight and coffee leaf rust. PCPB-listed. Mix 50 g per 20 L knapsack; cover both leaf faces. Observe pre-harvest intervals on salad crops. Not a cure-all — rotate modes of action in the rains.",
+    specs: [
+      { label: "Active", value: "Copper hydroxide" },
+      { label: "Mix", value: "50 g / 20 L" },
+      { label: "Register", value: "PCPB" },
+    ],
+  },
+  {
+    id: "broadclear-1l",
+    name: "BroadClear herbicide 1 L",
+    category: "protection",
+    sellerId: "machakos-vet",
+    price: 2150,
+    unit: "1 litre",
+    image: "/images/cat-protection.jpg",
+    rating: 4.5,
+    reviews: 194,
+    stock: 160,
+    pcpb: true,
+    origin: "Machakos",
+    leadDays: 2,
+    summary: "Non-selective burndown for seedbeds and orchard floors.",
+    description:
+      "Glyphosate 480 g/L equivalent for stale seedbeds, fence lines and orchard alleys. One litre treats about two acres as a directed spray. Keep off green crop. Use clean water — red laterite in the tank weakens the kill.",
+    specs: [
+      { label: "Type", value: "Non-selective" },
+      { label: "Coverage", value: "~2 acres / L" },
+      { label: "Register", value: "PCPB" },
+    ],
+  },
+  {
+    id: "tickstop-100",
+    name: "TickStop pour-on acaricide",
+    category: "livestock",
+    sellerId: "machakos-vet",
+    price: 1480,
+    unit: "100 ml",
+    image: "/images/cat-livestock.jpg",
+    rating: 4.7,
+    reviews: 331,
+    stock: 210,
+    pcpb: true,
+    origin: "Machakos",
+    leadDays: 2,
+    summary: "East Coast fever country — keep the dip or pour-on on schedule.",
+    description:
+      "Amitraz-class pour-on for cattle in Machakos, Kajiado and the coast hinterland. 10 ml per 100 kg along the backline. Rotate with a dip chemistry every season to slow resistance. Withdrawal: milk 48 hours, meat 14 days.",
+    specs: [
+      { label: "Species", value: "Cattle" },
+      { label: "Dose", value: "10 ml / 100 kg" },
+      { label: "Cold chain", value: "Not required" },
+    ],
+  },
+  {
+    id: "newcastle-1000",
+    name: "Newcastle vaccine, 1,000 doses",
+    category: "livestock",
+    sellerId: "machakos-vet",
+    price: 1150,
+    unit: "1,000 doses",
+    image: "/images/cat-livestock.jpg",
+    rating: 4.8,
+    reviews: 157,
+    stock: 90,
+    origin: "Nairobi",
+    leadDays: 1,
+    summary: "Lasota-type live vaccine. Ships on ice packs from the agrovet.",
+    description:
+      "Live lentogenic Newcastle vaccine for layers and broilers. Reconstitute with cool, non-chlorinated water and use within two hours. Ice-pack dispatch from Nairobi; open the box on arrival. Do not freeze the diluent.",
+    specs: [
+      { label: "Type", value: "Live, lentogenic" },
+      { label: "Route", value: "Water or eye drop" },
+      { label: "Dispatch", value: "Ice pack" },
+    ],
+  },
+  {
+    id: "hass-crate-4kg",
+    name: "Hass avocado export crate",
+    category: "produce",
+    sellerId: "meru-hass",
+    price: 1850,
+    compareAt: 2400,
+    unit: "4 kg crate",
+    image: "/images/cat-produce.jpg",
+    gallery: ["/images/cat-produce.jpg", "/images/hero-harvest.jpg"],
+    rating: 4.9,
+    reviews: 470,
+    stock: 220,
+    featured: true,
+    kebs: true,
+    origin: "Meru",
+    leadDays: 2,
+    summary: "Count 16–18 fruit, dry matter checked, packed in the highlands.",
+    description:
+      "Export-grade Hass from Meru smallholders. Fruit is picked to oil content, not calendar, then packed as count 16–18 in a ventilated 4 kg crate. Suitable for grocers, hotels and home boxes. Keep at 5–7 °C; ripen at room temperature.",
+    specs: [
+      { label: "Count", value: "16–18 fruit" },
+      { label: "Grade", value: "Export / Class I" },
+      { label: "Season", value: "Peak Mar–Sep" },
+    ],
+  },
+  {
+    id: "kent-mango-5kg",
+    name: "Kent mango crate",
+    category: "produce",
+    sellerId: "coast-fresh",
+    price: 2400,
+    unit: "5 kg crate",
+    image: "/images/hero-harvest.jpg",
+    rating: 4.7,
+    reviews: 188,
+    stock: 95,
+    origin: "Kilifi",
+    leadDays: 3,
+    summary: "Fibre-low Kent from the coast, packed at Changamwe.",
+    description:
+      "Kent mangoes from Kilifi orchards, harvested mature-green for the Nairobi desk. Low fibre, deep orange flesh. Five-kilo crate, fruit wrapped. Best eaten after three to five days of ripening.",
+    specs: [
+      { label: "Variety", value: "Kent" },
+      { label: "Source", value: "Kilifi" },
+      { label: "Pack", value: "5 kg ventilated" },
+    ],
+  },
+  {
+    id: "aa-coffee-1kg",
+    name: "AA coffee parchment",
+    category: "produce",
+    sellerId: "meru-hass",
+    price: 1240,
+    unit: "1 kg",
+    image: "/images/hero-harvest.jpg",
+    rating: 4.8,
+    reviews: 143,
+    stock: 80,
+    featured: true,
+    origin: "Meru",
+    leadDays: 3,
+    summary: "Washed AA from the Nyambene slopes. Roast at home or mill.",
+    description:
+      "Fully washed Arabica parchment, AA screen, from Nyambene co-ops. Bright citrus, blackcurrant, clean finish. Sold as parchment so roasters and serious home mills can take it through hulling. Not a supermarket roast bag.",
+    specs: [
+      { label: "Grade", value: "AA parchment" },
+      { label: "Process", value: "Washed" },
+      { label: "Altitude", value: "1,600–1,900 m" },
+    ],
+  },
+  {
+    id: "kericho-tea-1kg",
+    name: "Kericho orthodox tea",
+    category: "produce",
+    sellerId: "kericho-leaf",
+    price: 680,
+    unit: "1 kg",
+    image: "/images/hero-highlands.jpg",
+    rating: 4.8,
+    reviews: 256,
+    stock: 340,
+    origin: "Kericho",
+    leadDays: 3,
+    summary: "Broken-leaf orthodox from western highland bushes.",
+    description:
+      "Smallholder orthodox lots from Kericho, brisk and coppery, the cup Kenya is known for. Packed in a lined kilo bag. Brew 2.5 g per 150 ml at a rolling boil; 3–4 minutes.",
+    specs: [
+      { label: "Style", value: "Orthodox broken leaf" },
+      { label: "Region", value: "Kericho" },
+      { label: "Use", value: "Breakfast cup, blending" },
+    ],
+  },
+  {
+    id: "ware-potato-50",
+    name: "Ware potatoes, 50 kg",
+    category: "produce",
+    sellerId: "kitale-seed",
+    price: 3200,
+    unit: "50 kg bag",
+    image: "/images/hero-harvest.jpg",
+    rating: 4.5,
+    reviews: 97,
+    stock: 120,
+    origin: "Nyandarua",
+    leadDays: 3,
+    summary: "Food-grade Shangi, not seed. Kitchen and hotel bags.",
+    description:
+      "Ware (table) potatoes from the Aberdares. Firm, short-dormancy Shangi that chips and mashes well. 50 kg gunny. Not for planting — ask for the certified seed lot if you are putting a crop in.",
+    specs: [
+      { label: "Grade", value: "Ware / table" },
+      { label: "Bag", value: "50 kg" },
+    ],
+  },
+  {
+    id: "fresh-milk-20l",
+    name: "Chilled milk, 20 litre can",
+    category: "produce",
+    sellerId: "kiambu-greens",
+    price: 1600,
+    unit: "20 L",
+    image: "/images/cat-livestock.jpg",
+    rating: 4.6,
+    reviews: 74,
+    stock: 28,
+    origin: "Kiambu",
+    leadDays: 1,
+    summary: "Morning milk, chilled, Nairobi-radius delivery only.",
+    description:
+      "Pooled morning milk from the Limuru dairy circle, chilled below 4 °C. 20-litre food can. Sold to cafés, schools and homes inside the Nairobi–Kiambu belt. Not dispatched upcountry — milk does not travel warm.",
+    specs: [
+      { label: "Volume", value: "20 litres" },
+      { label: "Radius", value: "Nairobi / Kiambu" },
+      { label: "Window", value: "Same-day morning" },
+    ],
+  },
+  {
+    id: "highland-45hp",
+    name: "Highland 45HP 2WD tractor",
+    category: "machinery",
+    sellerId: "eldoret-yard",
+    price: 1850000,
+    unit: "unit, serviced",
+    image: "/images/cat-machinery.jpg",
+    gallery: ["/images/cat-machinery.jpg", "/images/hero-tractor.jpg"],
+    rating: 4.8,
+    reviews: 42,
+    stock: 4,
+    featured: true,
+    origin: "Eldoret",
+    leadDays: 10,
+    summary: "Yard-inspected compact tractor. Low-bed delivery nationwide.",
+    description:
+      "A 45 horsepower two-wheel-drive workhorse for 10–50 acre mixed farms — plough, harrow, trailer, maize sheller. Hours and service book verified at the Eldoret yard. Implements sold separately. A technician rides with the first start on your shamba.",
+    specs: [
+      { label: "Power", value: "45 HP, 2WD" },
+      { label: "Hours", value: "Yard verified" },
+      { label: "Delivery", value: "Low-bed, 47 counties" },
+    ],
+  },
+  {
+    id: "disc-plough-3",
+    name: "Three-furrow disc plough",
+    category: "machinery",
+    sellerId: "eldoret-yard",
+    price: 95000,
+    unit: "implement",
+    image: "/images/hero-tractor.jpg",
+    rating: 4.7,
+    reviews: 61,
+    stock: 11,
+    origin: "Eldoret",
+    leadDays: 7,
+    summary: "Heavy discs for breaking Kenyan red soils after harvest.",
+    description:
+      "Three-furrow disc plough matched to 40–60 HP tractors. Hardened discs, greaseable bearings. The yard sets the linkage before the lorry leaves Eldoret. Suitable for maize land after stover and for opening new shambas.",
+    specs: [
+      { label: "Furrows", value: "3" },
+      { label: "Match", value: "40–60 HP" },
+    ],
+  },
+  {
+    id: "knapsack-16l",
+    name: "16 litre knapsack sprayer",
+    category: "tools",
+    sellerId: "machakos-vet",
+    price: 3450,
+    unit: "sprayer",
+    image: "/images/cat-protection.jpg",
+    rating: 4.6,
+    reviews: 412,
+    stock: 150,
+    featured: true,
+    origin: "Nairobi",
+    leadDays: 2,
+    summary: "Brass lance, padded straps, the daily spray kit.",
+    description:
+      "Sixteen-litre backpack sprayer with a brass lance and two nozzles (fan and hollow cone). Padded straps, lockable trigger. The tank that earns its keep from sukuma plots to coffee. Rinse after copper or herbicide — never store mixed chemical overnight.",
+    specs: [
+      { label: "Volume", value: "16 L" },
+      { label: "Lance", value: "Brass" },
+      { label: "Nozzles", value: "Fan + cone" },
+    ],
+  },
+  {
+    id: "greenhouse-8x24",
+    name: "Greenhouse kit, 8 × 24 m",
+    category: "irrigation",
+    sellerId: "nyanza-water",
+    price: 185000,
+    unit: "kit",
+    image: "/images/hero-greenhouse.jpg",
+    gallery: ["/images/hero-greenhouse.jpg", "/images/cat-irrigation.jpg"],
+    rating: 4.8,
+    reviews: 79,
+    stock: 9,
+    featured: true,
+    origin: "Kisumu",
+    leadDays: 14,
+    summary: "Galvanised tunnel, 200 micron film, installation extra.",
+    description:
+      "An 8 by 24 metre commercial tunnel — galvanised hoop frame, 200 micron UV film, insect net on the gables. Kit price is materials; a Nyanza Irrigation crew can erect in three days inside Kisumu, Kericho, Kisii and Nakuru for a quoted labour fee.",
+    specs: [
+      { label: "Footprint", value: "8 × 24 m" },
+      { label: "Film", value: "200 micron UV" },
+      { label: "Install", value: "Quoted separately" },
+    ],
+  },
+  {
+    id: "drip-1acre",
+    name: "One-acre drip kit",
+    category: "irrigation",
+    sellerId: "nyanza-water",
+    price: 48500,
+    unit: "kit",
+    image: "/images/cat-irrigation.jpg",
+    rating: 4.7,
+    reviews: 133,
+    stock: 22,
+    origin: "Kisumu",
+    leadDays: 7,
+    summary: "Laterals, drippers, filter and header for an acre of rows.",
+    description:
+      "A complete acre kit: 16 mm laterals, 30 cm dripper spacing, disc filter, header and takeoff valves. Sized for tomato, onion and French bean beds. Pair with the solar pump if you are off the river. Layout drawing included.",
+    specs: [
+      { label: "Area", value: "1 acre" },
+      { label: "Spacing", value: "30 cm drippers" },
+      { label: "Filter", value: "Disc, included" },
+    ],
+  },
+  {
+    id: "solar-pump-1hp",
+    name: "Solar surface pump, 1 HP",
+    category: "irrigation",
+    sellerId: "nyanza-water",
+    price: 72000,
+    unit: "pump + controller",
+    image: "/images/cat-irrigation.jpg",
+    rating: 4.6,
+    reviews: 58,
+    stock: 14,
+    origin: "Kisumu",
+    leadDays: 8,
+    summary: "Daylight pumping from a river, dam or shallow well.",
+    description:
+      "One-horsepower surface solar pump with MPPT controller. Panels quoted to site (not in this price) because roof and ground mounts differ. Lifts from a river, dam or well under 8 metres suction. Enough for the acre drip kit on a clear highland day.",
+    specs: [
+      { label: "Power", value: "1 HP surface" },
+      { label: "Suction", value: "≤ 8 m" },
+      { label: "Panels", value: "Quoted to site" },
+    ],
+  },
+  {
+    id: "broiler-starter-50",
+    name: "Broiler starter mash, 50 kg",
+    category: "livestock",
+    sellerId: "machakos-vet",
+    price: 3850,
+    unit: "50 kg bag",
+    image: "/images/cat-livestock.jpg",
+    rating: 4.7,
+    reviews: 265,
+    stock: 200,
+    origin: "Nairobi",
+    leadDays: 2,
+    summary: "Day-old to day-21 broiler mash, mill-fresh.",
+    description:
+      "High-protein starter mash for broilers from day one to day 21. Mill date stamped on the bag. Store off the floor; use within three weeks of milling. Follow with grower from the same desk.",
+    specs: [
+      { label: "Phase", value: "Starter, d1–d21" },
+      { label: "Bag", value: "50 kg" },
+    ],
+  },
+  {
+    id: "incubator-528",
+    name: "Automatic incubator, 528 egg",
+    category: "livestock",
+    sellerId: "machakos-vet",
+    price: 28500,
+    unit: "unit",
+    image: "/images/cat-livestock.jpg",
+    rating: 4.5,
+    reviews: 49,
+    stock: 7,
+    origin: "Nairobi",
+    leadDays: 5,
+    summary: "Turner, thermostat and humidity pan. Kuku business in a box.",
+    description:
+      "A 528-egg cabinet incubator with automatic turning and a digital thermostat. Runs on mains with a socket for a small UPS. Suitable for kienyeji and layer eggs. A setter tray plan is in the crate.",
+    specs: [
+      { label: "Capacity", value: "528 eggs" },
+      { label: "Turn", value: "Automatic" },
+      { label: "Power", value: "240 V" },
+    ],
+  },
+  {
+    id: "dairy-meal-70",
+    name: "Dairy meal, 70 kg",
+    category: "livestock",
+    sellerId: "kiambu-greens",
+    price: 3200,
+    unit: "70 kg bag",
+    image: "/images/cat-livestock.jpg",
+    rating: 4.6,
+    reviews: 118,
+    stock: 85,
+    origin: "Kiambu",
+    leadDays: 2,
+    summary: "Production ration for Friesians on zero-graze.",
+    description:
+      "Eighteen-percent protein dairy meal for high producers on Napier and maize silage. Feed 1 kg meal per 1.5 litres of milk above maintenance, split morning and evening. Kiambu mill, bagged 70 kg.",
+    specs: [
+      { label: "Protein", value: "18%" },
+      { label: "Bag", value: "70 kg" },
+    ],
+  },
+  {
+    id: "jembe-panga-kit",
+    name: "Jembe and panga kit",
+    category: "tools",
+    sellerId: "machakos-vet",
+    price: 1250,
+    unit: "pair",
+    image: "/images/cat-tools.jpg",
+    rating: 4.8,
+    reviews: 520,
+    stock: 300,
+    origin: "Nairobi",
+    leadDays: 2,
+    summary: "The two tools every Kenyan shamba actually uses.",
+    description:
+      "Forged jembe with a seasoned handle and a full-tang panga in a leather sheath. Not decorative. The kit we send to first-time plot owners and to schools. Oil the blade; do not leave it in the rain.",
+    specs: [
+      { label: "Jembe", value: "Forged, hardwood" },
+      { label: "Panga", value: "Full tang" },
+    ],
+  },
+  {
+    id: "wheelbarrow-hd",
+    name: "Heavy-duty wheelbarrow",
+    category: "tools",
+    sellerId: "eldoret-yard",
+    price: 4800,
+    unit: "barrow",
+    image: "/images/cat-tools.jpg",
+    rating: 4.6,
+    reviews: 203,
+    stock: 48,
+    origin: "Eldoret",
+    leadDays: 4,
+    summary: "Pneumatic tyre, welded tray, manure and harvest work.",
+    description:
+      "A farm barrow, not a hardware-store toy. Welded tray, pneumatic tyre that copes with red-soil ruts, hardwood handles. Moves manure, harvest sacks and greenhouse mix without folding.",
+    specs: [
+      { label: "Tyre", value: "Pneumatic" },
+      { label: "Tray", value: "Welded steel" },
+    ],
+  },
+];
+
+export const MARKET_TICKER = [
+  { label: "Maize 90 kg", value: "KES 6,000", note: "Awasi" },
+  { label: "DAP 50 kg", value: "KES 4,150", note: "Commercial" },
+  { label: "Fertilizer subsidy", value: "KES 2,000", note: "NCPB desk" },
+  { label: "Maize seed 2 kg", value: "KES 300", note: "Subsidy pack" },
+  { label: "Beans 2 kg", value: "KES 250–300", note: "Market" },
+];
+
+export const TRUST_STATS = [
+  { value: "8,400", label: "Verified sellers" },
+  { value: "47", label: "Counties served" },
+  { value: "KES 2.1B", label: "Last-year GMV" },
+  { value: "24h", label: "Nairobi dispatch" },
+];
+
+export function getCategory(id: string): Category | undefined {
+  return CATEGORIES.find((c) => c.id === id);
+}
+
+export function getSeller(id: string): Seller | undefined {
+  return SELLERS.find((s) => s.id === id);
+}
+
+export function getProduct(id: string): Product | undefined {
+  return PRODUCTS.find((p) => p.id === id);
+}
+
+export function productsByCategory(id: CategoryId): Product[] {
+  return PRODUCTS.filter((p) => p.category === id);
+}
+
+export function productsBySeller(id: string): Product[] {
+  return PRODUCTS.filter((p) => p.sellerId === id);
+}
+
+export function relatedProducts(product: Product, limit = 4): Product[] {
+  return PRODUCTS.filter((p) => p.id !== product.id && p.category === product.category).slice(
+    0,
+    limit,
+  );
+}
+
+export function searchProducts(query: string, list: Product[]): Product[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return list;
+  return list.filter((p) => {
+    const seller = getSeller(p.sellerId);
+    const hay = `${p.name} ${p.summary} ${p.description} ${p.origin} ${p.unit} ${seller?.name ?? ""} ${seller?.county ?? ""}`.toLowerCase();
+    return hay.includes(q);
+  });
+}
