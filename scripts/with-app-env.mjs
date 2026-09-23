@@ -20,9 +20,9 @@
  * `process.env`, which is why the merge has to happen before Vite starts.
  */
 import { spawn } from "node:child_process";
-import { readFileSync, realpathSync } from "node:fs";
+import { existsSync, readFileSync, realpathSync } from "node:fs";
 import { constants as osConstants } from "node:os";
-import { dirname, join } from "node:path";
+import { delimiter, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 export const APP_ENV_REL_PATH = ".grok/app-env.json";
@@ -104,14 +104,62 @@ export function isMainModule(moduleUrl) {
   }
 }
 
+export function resolveCommandInPath(command, env = process.env) {
+  if (!command || command.includes("/") || command.includes("\\")) return command;
+  const pathEntries = (env.PATH || "").split(delimiter).filter(Boolean);
+  const extensions = ["", ...(env.PATHEXT || ".EXE;.CMD;.BAT;.COM").split(";")]
+    .map((ext) => ext.toLowerCase())
+    .filter(Boolean);
+  for (const dir of pathEntries) {
+    for (const ext of extensions) {
+      const candidate = join(dir, command + ext);
+      if (existsSync(candidate)) return candidate;
+    }
+  }
+  return command;
+}
+
+function quoteWindowsArg(arg) {
+  return arg.includes(" ") || arg.includes('"')
+    ? `"${String(arg).replace(/"/g, '\\"')}"`
+    : String(arg);
+}
+
 function main(argv) {
   const [command, ...args] = argv;
   if (!command) {
     console.error("usage: node scripts/with-app-env.mjs <command> [args…]");
     process.exit(2);
   }
-  const env = mergeAppEnv(readAppEnv(projectRoot()), process.env);
-  const child = spawn(command, args, { stdio: "inherit", env });
+  const root = projectRoot();
+  const env = mergeAppEnv(readAppEnv(root), process.env);
+  const localBin = join(root, "node_modules", ".bin");
+  const pathEntries = [localBin, env.PATH || ""].filter(Boolean);
+  env.PATH = pathEntries.join(delimiter);
+  if (process.platform === "win32") {
+    const shell = process.env.ComSpec || "C:\\Windows\\System32\\cmd.exe";
+    const quotedCommand = quoteWindowsArg(resolveCommandInPath(command, env));
+    const commandLine = [quotedCommand, ...args.map(quoteWindowsArg)].join(" ");
+    const child = spawn(shell, ["/d", "/s", "/c", commandLine], {
+      stdio: "inherit",
+      env,
+    });
+    for (const signal of ["SIGINT", "SIGTERM", "SIGHUP"]) {
+      process.on(signal, () => child.kill(signal));
+    }
+    child.on("error", (err) => {
+      console.error(`[with-app-env] failed to run ${command}:`, err?.message || err);
+      process.exit(127);
+    });
+    child.on("exit", (code, signal) => {
+      process.exit(exitStatusFromChild(code, signal));
+    });
+    return;
+  }
+  const child = spawn(resolveCommandInPath(command, env), args, {
+    stdio: "inherit",
+    env,
+  });
   // The dev server is long-running and is stopped by signalling this wrapper.
   for (const signal of ["SIGINT", "SIGTERM", "SIGHUP"]) {
     process.on(signal, () => child.kill(signal));

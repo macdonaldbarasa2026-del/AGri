@@ -92,6 +92,37 @@ test("the wrapped command sees an explicit override, not the file value", async 
   assert.equal(stdout, "true");
 });
 
+test("the wrapper prepends the workspace-local bin directory to PATH", async () => {
+  const { stdout } = await execFileAsync(process.execPath, [
+    WRAPPER,
+    process.execPath,
+    "-p",
+    "process.env.PATH.split(require('node:path').delimiter).includes(require('node:path').join(process.cwd(), 'node_modules', '.bin'))",
+  ]);
+  assert.equal(stdout.replace(/\u001b\[[0-9;]*m/g, "").trim(), "true");
+});
+
+test("the wrapper resolves Windows .cmd shims from PATH", async () => {
+  if (process.platform !== "win32") return;
+  const runtimePath = "C:\\Users\\kenya\\AppData\\Local\\Programs\\kimi-desktop\\resources\\resources\\runtime";
+  const env = { ...process.env, PATH: runtimePath, PATHEXT: ".COM;.EXE;.BAT;.CMD" };
+  const { stdout } = await execFileAsync(process.execPath, [
+    WRAPPER,
+    process.execPath,
+    "-p",
+    "require('./scripts/with-app-env.mjs').resolveCommandInPath('npm', process.env).toLowerCase().endsWith('npm.cmd')",
+  ], { env });
+  assert.equal(stdout.replace(/\u001b\[[0-9;]*m/g, "").trim(), "true");
+});
+
+test("the wrapper can actually spawn a Windows .cmd shim", async () => {
+  if (process.platform !== "win32") return;
+  const runtimePath = "C:\\Users\\kenya\\AppData\\Local\\Programs\\kimi-desktop\\resources\\resources\\runtime";
+  const env = { ...process.env, PATH: runtimePath, PATHEXT: ".COM;.EXE;.BAT;.CMD" };
+  const { stdout } = await execFileAsync(process.execPath, [WRAPPER, "npm", "--version"], { env });
+  assert.match(stdout.trim(), /^\d+\.\d+\.\d+$/);
+});
+
 test("the wrapper propagates the command's exit code", async () => {
   await assert.rejects(
     execFileAsync(process.execPath, [WRAPPER, process.execPath, "-e", "process.exit(3)"]),

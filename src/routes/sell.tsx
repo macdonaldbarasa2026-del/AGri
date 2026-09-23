@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { type FormEvent, useState } from "react";
+import { type ChangeEvent, type FormEvent, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { FieldLabel, Input, NativeSelect, Textarea } from "@/components/ui/input";
@@ -12,6 +12,20 @@ function SellPage() {
   const publish = useShop((s) => s.publishListing);
   const navigate = useNavigate();
   const [busy, setBusy] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+
+  function onImageChange(e: ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) {
+      setUploadedImage(null);
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      setUploadedImage(typeof reader.result === "string" ? reader.result : null);
+    };
+    reader.readAsDataURL(file);
+  }
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -34,6 +48,8 @@ function SellPage() {
       return;
     }
 
+    const listingImage = uploadedImage || cat?.image || "/images/hero-harvest.jpg";
+
     const listing: SellerListing = {
       id: newListingId(),
       name,
@@ -41,7 +57,8 @@ function SellPage() {
       sellerId: "independent",
       price: Math.round(price),
       unit,
-      image: cat?.image ?? "/images/hero-harvest.jpg",
+      image: listingImage,
+      gallery: uploadedImage ? [listingImage] : undefined,
       rating: 5,
       reviews: 0,
       stock: Math.max(1, Math.round(stock)),
@@ -139,6 +156,25 @@ function SellPage() {
             <div>
               <FieldLabel htmlFor="stock">Quantity in yard</FieldLabel>
               <Input id="stock" name="stock" type="number" min={1} defaultValue={10} />
+            </div>
+            <div className="sm:col-span-2">
+              <FieldLabel htmlFor="product-image">Product photo</FieldLabel>
+              <Input
+                id="product-image"
+                type="file"
+                accept="image/*"
+                onChange={onImageChange}
+                className="file:mr-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-2 file:text-sm file:font-medium file:text-primary-fg"
+              />
+              {uploadedImage ? (
+                <div className="mt-3 overflow-hidden rounded-lg border border-border bg-surface-alt">
+                  <img
+                    src={uploadedImage}
+                    alt="Uploaded product preview"
+                    className="h-44 w-full object-cover"
+                  />
+                </div>
+              ) : null}
             </div>
             <div className="sm:col-span-2">
               <FieldLabel htmlFor="description">Description</FieldLabel>
