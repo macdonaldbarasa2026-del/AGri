@@ -134,8 +134,10 @@ function main(argv) {
   const root = projectRoot();
   const env = mergeAppEnv(readAppEnv(root), process.env);
   const localBin = join(root, "node_modules", ".bin");
-  const pathEntries = [localBin, env.PATH || ""].filter(Boolean);
-  env.PATH = pathEntries.join(delimiter);
+  const inheritedPath = process.platform === "win32" ? env.Path || env.PATH || "" : env.PATH || "";
+  const pathValue = [localBin, inheritedPath].filter(Boolean).join(delimiter);
+  env.PATH = pathValue;
+  if (process.platform === "win32") env.Path = pathValue;
   if (process.platform === "win32") {
     const shell = process.env.ComSpec || "C:\\Windows\\System32\\cmd.exe";
     const quotedCommand = quoteWindowsArg(resolveCommandInPath(command, env));
